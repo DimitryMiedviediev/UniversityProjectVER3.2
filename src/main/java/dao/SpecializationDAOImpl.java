@@ -18,19 +18,19 @@ public class SpecializationDAOImpl implements SpecializationDAO {
         try {
             HashMap<String, String> pair = new HashMap<>();
             conn.setCatalog(connectionDB.getSCHEMA_NAME());
-            CallableStatement statement = conn.prepareCall("{CALL P_CREATE_SPECIALIZATION(?,?,?,?,?,?,?,?,?,?,?)}");
-            statement.setString("vTITLE_UA", titleUa);
-            statement.setString("vCODE_UA", codeUa);
-            statement.setString("vTITLE_EN", titleEn);
-            statement.setString("vCODE_EN", codeEn);
-            statement.setInt("vSPECIALITY", speciality);
-            statement.setInt("vBACHELOR", bachelor);
-            statement.setInt("vSPECIALIST", specialist);
-            statement.setInt("vMASTER", master);
-            statement.setInt("vKATEDRA", katedra);
+            CallableStatement statement = conn.prepareCall("{call p_create_specialization(?,?,?,?,?,?,?,?,?,?,?)}");
+            statement.setString("p_title_ua", titleUa);
+            statement.setString("p_code_ua", codeUa);
+            statement.setString("p_title_en", titleEn);
+            statement.setString("p_code_en", codeEn);
+            statement.setInt("p_speciality", speciality);
+            statement.setInt("p_bachelor", bachelor);
+            statement.setInt("p_specialist", specialist);
+            statement.setInt("p_master", master);
+            statement.setInt("p_katedra", katedra);
             statement.execute();
-            pair.put("responseCode", statement.getString("vRESPONSE_CODE"));
-            pair.put("responseMessage", statement.getString("vRESPONSE_MESSAGE"));
+            pair.put("responseCode", statement.getString("p_response_code"));
+            pair.put("responseMessage", statement.getString("p_response_message"));
             list.add(pair);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -93,21 +93,21 @@ public class SpecializationDAOImpl implements SpecializationDAO {
         Connection conn = connectionDB.getConnection();
         try {
             conn.setCatalog(connectionDB.getSCHEMA_NAME());
-            CallableStatement statement = conn.prepareCall("{CALL P_UPDATE_SPECIALIZATION(?,?,?,?,?,?,?,?,?,?,?,?)}");
-            statement.setInt("vID", id);
-            statement.setString("vTITLE_UA", titleUa);
-            statement.setString("vCODE_UA", codeUa);
-            statement.setString("vTITLE_EN", titleEn);
-            statement.setString("vCODE_EN", codeEn);
-            statement.setInt("vSPECIALITY", speciality);
-            statement.setInt("vBACHELOR", bachelor);
-            statement.setInt("vSPECIALIST", specialist);
-            statement.setInt("vMASTER", master);
-            statement.setInt("vKATEDRA", katedra);
+            CallableStatement statement = conn.prepareCall("{call p_update_specialization(?,?,?,?,?,?,?,?,?,?,?,?)}");
+            statement.setInt("p_id", id);
+            statement.setString("p_title_ua", titleUa);
+            statement.setString("p_code_ua", codeUa);
+            statement.setString("p_title_en", titleEn);
+            statement.setString("p_code_en", codeEn);
+            statement.setInt("p_speciality", speciality);
+            statement.setInt("p_bachelor", bachelor);
+            statement.setInt("p_specialist", specialist);
+            statement.setInt("p_master", master);
+            statement.setInt("p_katedra", katedra);
             statement.execute();
             HashMap<String, String> pair = new HashMap<>();
-            pair.put("responseCode", statement.getString("vRESPONSE_CODE"));
-            pair.put("responseMessage", statement.getString("vRESPONSE_MESSAGE"));
+            pair.put("responseCode", statement.getString("p_response_code"));
+            pair.put("responseMessage", statement.getString("p_response_message"));
             list.add(pair);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,13 +122,13 @@ public class SpecializationDAOImpl implements SpecializationDAO {
         Connection conn = connectionDB.getConnection();
         try {
             conn.setCatalog(connectionDB.getSCHEMA_NAME());
-            CallableStatement statement = conn.prepareCall("{CALL P_DELETE_SPECIALIZATION(?,?,?)}");
-            statement.setInt("vID", id);
+            CallableStatement statement = conn.prepareCall("{call p_delete_specialization(?,?,?)}");
+            statement.setInt("p_id", id);
             statement.execute();
 
             HashMap<String, String> pair = new HashMap<>();
-            pair.put("responseCode", statement.getString("vRESPONSE_CODE"));
-            pair.put("responseMessage", statement.getString("vRESPONSE_MESSAGE"));
+            pair.put("responseCode", statement.getString("p_response_code"));
+            pair.put("responseMessage", statement.getString("p_response_message"));
             list.add(pair);
         } catch (SQLException e) {
             e.printStackTrace();

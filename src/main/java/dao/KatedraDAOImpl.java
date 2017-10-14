@@ -18,15 +18,15 @@ public class KatedraDAOImpl implements KatedraDAO {
         try {
             HashMap<String, String> pair = new HashMap<>();
             conn.setCatalog(connectionDB.getSCHEMA_NAME());
-            CallableStatement statement = conn.prepareCall("{CALL P_CREATE_KATEDRA(?,?,?,?,?,?,?)}");
-            statement.setString("vTITLE_UA", titleUa);
-            statement.setString("vCODE_UA", codeUa);
-            statement.setString("vTITLE_EN", titleEn);
-            statement.setString("vCODE_EN", codeEn);
-            statement.setInt("vFACULTY", faculty);
+            CallableStatement statement = conn.prepareCall("{call p_create_katedra(?,?,?,?,?,?,?)}");
+            statement.setString("p_title_ua", titleUa);
+            statement.setString("p_code_ua", codeUa);
+            statement.setString("p_title_en", titleEn);
+            statement.setString("p_title_en", codeEn);
+            statement.setInt("p_faculty", faculty);
             statement.execute();
-            pair.put("responseCode", statement.getString("vRESPONSE_CODE"));
-            pair.put("responseMessage", statement.getString("vRESPONSE_MESSAGE"));
+            pair.put("responseCode", statement.getString("p_response_code"));
+            pair.put("responseMessage", statement.getString("p_response_message"));
             list.add(pair);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,7 +41,7 @@ public class KatedraDAOImpl implements KatedraDAO {
         Connection conn = connectionDB.getConnection();
         try {
             conn.setCatalog(connectionDB.getSCHEMA_NAME());
-            String sqlSelectQuery = "SELECT * FROM v_katedra WHERE id = ?";
+            String sqlSelectQuery = "select * from v_katedra where id = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(sqlSelectQuery);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -68,7 +68,7 @@ public class KatedraDAOImpl implements KatedraDAO {
         try {
             conn.setCatalog(connectionDB.getSCHEMA_NAME());
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM v_katedra");
+            ResultSet resultSet = statement.executeQuery("select * from v_katedra");
             int columnCount = resultSet.getMetaData().getColumnCount();
             while (resultSet.next()) {
                 HashMap<String, String> pair = new HashMap<>();
@@ -90,17 +90,17 @@ public class KatedraDAOImpl implements KatedraDAO {
         Connection conn = connectionDB.getConnection();
         try {
             conn.setCatalog(connectionDB.getSCHEMA_NAME());
-            CallableStatement statement = conn.prepareCall("{CALL P_UPDATE_KATEDRA(?,?,?,?,?,?,?,?)}");
-            statement.setInt("vID", id);
-            statement.setString("vTITLE_UA", titleUa);
-            statement.setString("vCODE_UA", codeUa);
-            statement.setString("vTITLE_EN", titleEn);
-            statement.setString("vCODE_EN", codeEn);
-            statement.setInt("vFACULTY", faculty);
+            CallableStatement statement = conn.prepareCall("{call p_update_katedra(?,?,?,?,?,?,?,?)}");
+            statement.setInt("v_id", id);
+            statement.setString("p_title_ua", titleUa);
+            statement.setString("p_code_ua", codeUa);
+            statement.setString("p_title_en", titleEn);
+            statement.setString("p_title_en", codeEn);
+            statement.setInt("p_faculty", faculty);
             statement.execute();
             HashMap<String, String> pair = new HashMap<>();
-            pair.put("responseCode", statement.getString("vRESPONSE_CODE"));
-            pair.put("responseMessage", statement.getString("vRESPONSE_MESSAGE"));
+            pair.put("responseCode", statement.getString("p_response_code"));
+            pair.put("responseMessage", statement.getString("p_response_message"));
             list.add(pair);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -115,13 +115,13 @@ public class KatedraDAOImpl implements KatedraDAO {
         Connection conn = connectionDB.getConnection();
         try {
             conn.setCatalog(connectionDB.getSCHEMA_NAME());
-            CallableStatement statement = conn.prepareCall("{CALL P_DELETE_KATEDRA(?,?,?)}");
-            statement.setInt("vID", id);
+            CallableStatement statement = conn.prepareCall("{call p_delete_katedra(?,?,?)}");
+            statement.setInt("p_id", id);
             statement.execute();
 
             HashMap<String, String> pair = new HashMap<>();
-            pair.put("responseCode", statement.getString("vRESPONSE_CODE"));
-            pair.put("responseMessage", statement.getString("vRESPONSE_MESSAGE"));
+            pair.put("responseCode", statement.getString("p_response_code"));
+            pair.put("responseMessage", statement.getString("p_response_message"));
             list.add(pair);
         } catch (SQLException e) {
             e.printStackTrace();

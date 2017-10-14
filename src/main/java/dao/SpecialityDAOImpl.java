@@ -17,7 +17,7 @@ public class SpecialityDAOImpl implements SpecialityDAO {
         Connection conn = connectionDB.getConnection();
         try {
             conn.setCatalog(connectionDB.getSCHEMA_NAME());
-            String sqlSelectQuery = "SELECT * FROM v_speciality WHERE id = ?";
+            String sqlSelectQuery = "select * from v_speciality where id = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(sqlSelectQuery);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -44,7 +44,7 @@ public class SpecialityDAOImpl implements SpecialityDAO {
         try {
             conn.setCatalog(connectionDB.getSCHEMA_NAME());
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM v_speciality");
+            ResultSet resultSet = statement.executeQuery("select * from v_speciality");
             int columnCount = resultSet.getMetaData().getColumnCount();
             while (resultSet.next()) {
                 HashMap<String, String> pair = new HashMap<>();
