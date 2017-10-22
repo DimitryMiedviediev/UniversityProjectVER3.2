@@ -21,7 +21,7 @@ public class UniversityDAOImpl implements UniversityDAO {
             HashMap<String, String> pair = new HashMap<>();
             conn.setCatalog(connectionDB.getSCHEMA_NAME());
             CallableStatement statement = conn.prepareCall("{call p_create_university(?,?,?,?,?,?)}");
-            statement.setString("p_title_en", titleUa);
+            statement.setString("p_title_ua", titleUa);
             statement.setString("p_code_ua", codeUa);
             statement.setString("p_title_en", titleEn);
             statement.setString("p_code_en", codeEn);
