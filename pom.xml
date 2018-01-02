@@ -81,6 +81,20 @@
             <version>5.1.40</version>
         </dependency>
 
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <!--This dependency includes the SUN implementation of the javax.mail API-->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.5.5</version>
+        </dependency>
+
+
     </dependencies>
     <build>
         <finalName>UniversityProjectVER3.2</finalName>
