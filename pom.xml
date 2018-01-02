@@ -13,8 +13,11 @@
     <version>1.5.7.RELEASE</version>
   </parent>
 
-  <dependencies>
+  <properties>
+    <tomcat.version>8.0.3</tomcat.version>
+  </properties>
 
+  <dependencies>
 
     <dependency>
       <groupId>org.junit.platform</groupId>
@@ -27,7 +30,46 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>4.3.5.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <version>4.3.5.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>4.3.5.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>4.3.5.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+      <version>4.2.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
+      <version>4.2.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-taglibs</artifactId>
+      <version>4.2.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>4.3.5.RELEASE</version>
+    </dependency>
     <!--&lt;!&ndash;JDBC dependency&ndash;&gt;-->
     <!--<dependency>-->
       <!--<groupId>jdbc</groupId>-->
@@ -46,6 +88,19 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.40</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+
+    <!--This dependency includes the SUN implementation of the javax.mail API-->
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>javax.mail</artifactId>
+      <version>1.5.5</version>
     </dependency>
 
   </dependencies>
