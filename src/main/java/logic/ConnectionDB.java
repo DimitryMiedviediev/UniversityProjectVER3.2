@@ -9,7 +9,7 @@ import java.sql.SQLException;
  */
 public class ConnectionDB {
     private final String SCHEMA_NAME = "univercity42test";
-    private final String HOST = "188.166.171.33";
+    private final String HOST = "31.42.165.48";
     private final String USERNAME = "univer";
     private final String PASSWORD = "universe";
     private final String URL = "jdbc:mysql://" + HOST + ":3306/" + SCHEMA_NAME + "?characterEncoding=utf8&amp;useSSL=false&amp;useUnicode=yes";
