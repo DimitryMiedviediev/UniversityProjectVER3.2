@@ -9,7 +9,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
  * Created by Dimitry on 22.09.17.
  */
 @SpringBootApplication
-public class Application{// extends SpringBootServletInitializer{
+public class Application extends SpringBootServletInitializer{
 
 //    @Override
 //    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
