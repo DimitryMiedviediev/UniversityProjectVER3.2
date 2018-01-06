@@ -1,4 +1,4 @@
-package service;
+package serviceREST;
 
 import dao.UniversityDAO;
 import dao.UniversityDAOImpl;

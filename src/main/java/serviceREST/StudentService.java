@@ -1,4 +1,4 @@
-package service;
+package serviceREST;
 
 import dao.StudentDAO;
 import dao.StudentDAOImpl;
