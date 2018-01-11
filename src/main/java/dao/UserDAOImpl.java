@@ -1,7 +1,11 @@
 package dao;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import logic.ConnectionDB;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,14 +16,12 @@ public class UserDAOImpl implements UserDAO{
     private ConnectionDB connectionDB = new ConnectionDB();
 
     @Override
-    public List<HashMap<String, String>> createUser(String name, String lastname, String email, String password, Connection connection) {
+    public JsonNode createUser(String email, String password, Connection connection) throws IOException {
         List<HashMap<String, String>> list = new ArrayList<>();
         try {
             HashMap<String, String> pair = new HashMap<>();
             connection.setCatalog(connectionDB.getSCHEMA_NAME());
-            CallableStatement statement = connection.prepareCall("{call p_create_user(?,?,?,?,?,?)}");
-            statement.setString("p_name", name);
-            statement.setString("p_lastname", lastname);
+            CallableStatement statement = connection.prepareCall("{call p_create_user(?,?,?,?)}");
             statement.setString("p_email", email);
             statement.setString("p_password", password);
             statement.execute();
@@ -29,11 +31,13 @@ public class UserDAOImpl implements UserDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
+        String json = new Gson().toJson(list);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readTree(json);
     }
 
     @Override
-    public List<HashMap<String, String>> getUser(int id, Connection connection) {
+    public JsonNode getUser(int id, Connection connection) throws IOException {
         List<HashMap<String, String>> list = new ArrayList<>();
         try {
             connection.setCatalog(connectionDB.getSCHEMA_NAME());
@@ -52,11 +56,39 @@ public class UserDAOImpl implements UserDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
+        String json = new Gson().toJson(list);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readTree(json);
     }
 
     @Override
-    public List<HashMap<String, String>> getUserList(Connection connection) {
+    public JsonNode getUser(String email, Connection connection) throws IOException {
+        List<HashMap<String, String>> list = new ArrayList<>();
+        try {
+            connection.setCatalog(connectionDB.getSCHEMA_NAME());
+            String sqlSelectQuery = "select * from user where email = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlSelectQuery);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int columnCount = resultSet.getMetaData().getColumnCount();
+            while (resultSet.next()) {
+                HashMap<String, String> pair = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    pair.put(resultSet.getMetaData().getColumnName(i), resultSet.getString(resultSet.getMetaData().getColumnName(i)));
+                }
+                list.add(pair);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String json = new Gson().toJson(list);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readTree(json);
+    }
+
+    @Override
+    public JsonNode getUserList(Connection connection) throws IOException {
         List<HashMap<String, String>> list = new ArrayList<>();
         try {
             connection.setCatalog(connectionDB.getSCHEMA_NAME());
@@ -73,11 +105,13 @@ public class UserDAOImpl implements UserDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
+        String json = new Gson().toJson(list);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readTree(json);
     }
 
     @Override
-    public List<HashMap<String, String>> updateUser(int id, String name, String lastname, String email, String password, Connection connection) {
+    public JsonNode updateUser(int id, String name, String lastname, String email, String password, Connection connection) throws IOException {
         List<HashMap<String, String>> list = new ArrayList<>();
         try {
             connection.setCatalog(connectionDB.getSCHEMA_NAME());
@@ -95,11 +129,13 @@ public class UserDAOImpl implements UserDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
+        String json = new Gson().toJson(list);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readTree(json);
     }
 
     @Override
-    public List<HashMap<String, String>> deleteUser(int id, Connection connection) {
+    public JsonNode deleteUser(int id, Connection connection) throws IOException {
         List<HashMap<String, String>> list = new ArrayList<>();
         try {
             connection.setCatalog(connectionDB.getSCHEMA_NAME());
@@ -114,6 +150,8 @@ public class UserDAOImpl implements UserDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
+        String json = new Gson().toJson(list);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readTree(json);
     }
 }

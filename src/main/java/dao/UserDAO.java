@@ -1,19 +1,24 @@
 package dao;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 
 public interface UserDAO {
 
-    List<HashMap<String, String>> createUser(String name, String lastname, String email, String password, Connection connection);
+    JsonNode createUser(String email, String password, Connection connection) throws IOException;
 
-    List<HashMap<String, String>> getUser(int id, Connection connection);
+    JsonNode getUser(int id, Connection connection) throws IOException;
 
-    List<HashMap<String, String>> getUserList(Connection connection);
+    JsonNode getUser(String email, Connection connection) throws IOException;
 
-    List<HashMap<String, String>> updateUser(int id, String name, String lastname, String email, String password, Connection connection);
+    JsonNode getUserList(Connection connection) throws IOException;
 
-    List<HashMap<String, String>> deleteUser(int id, Connection connection);
+    JsonNode updateUser(int id, String name, String lastname, String email, String password, Connection connection) throws IOException;
+
+    JsonNode deleteUser(int id, Connection connection) throws IOException;
 
 }

@@ -1,0 +1,10 @@
+/* CSS Document */
+/* in order to center form like in example "sign in form" with flex in Bootsrap we have to:
+1.We must use min-height
+2.We also must use col-xs- class manually assign size
+*/
+.vertical-center {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+}
