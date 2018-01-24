@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.databind.JsonNode;
 import dao.UserDAO;
 import dao.UserDAOImpl;
 import logic.ConnectionDB;
@@ -13,7 +14,8 @@ public class Start {
         Connection connection = connectionDB.getConnection();
         UserDAO userDAO = new UserDAOImpl();
         try {
-            System.out.println(userDAO.getUser("dimitrymiedviediev@gmail.com", connection).get(0).get("name").asText());
+            JsonNode userInfo = userDAO.getUser(15, connection);
+            System.out.println(userInfo);
         } catch (IOException e) {
             e.printStackTrace();
         }

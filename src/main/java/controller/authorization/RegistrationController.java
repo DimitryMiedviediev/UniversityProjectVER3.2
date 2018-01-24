@@ -40,6 +40,15 @@ public class RegistrationController extends HttpServlet {
         resp.setContentType("text/html;charset=utf-8");
         HttpSession session = req.getSession(true);
 
+        try {
+            JsonNode jsonNode = (JsonNode) session.getAttribute("UserInfo");
+            if (jsonNode.get(0) != null) {
+                resp.sendRedirect("home");
+                return;
+            }
+        } catch (NullPointerException ignored) {
+        }
+
         if (req.getParameter("SignUp") != null && Objects.equals(req.getParameter("password"), req.getParameter("reset_password"))) {
             Connection connection = connectionDB.getConnection();
             JsonNode actualObj = authenticationService.createUser(

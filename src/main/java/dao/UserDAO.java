@@ -17,6 +17,10 @@ public interface UserDAO {
 
     JsonNode getUserList(Connection connection) throws IOException;
 
+    JsonNode updateUserEmail(int id, String email, Connection connection) throws IOException;
+
+    JsonNode updateUserPassword(int id, String password, Connection connection) throws IOException;
+
     JsonNode updateUser(int id, String name, String lastname, String email, String password, Connection connection) throws IOException;
 
     JsonNode deleteUser(int id, Connection connection) throws IOException;

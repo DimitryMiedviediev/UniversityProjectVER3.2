@@ -1,8 +1,6 @@
 package controller.authorization;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import logic.ConnectionDB;
 import service.AuthenticationService;
 
@@ -14,11 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 @WebServlet(
         name = "Authorization",
@@ -39,6 +33,14 @@ public class AuthorizationController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=utf-8");
         HttpSession session = req.getSession(true);
+        try {
+            JsonNode jsonNode = (JsonNode) session.getAttribute("UserInfo");
+            if (jsonNode.get(0) != null) {
+                resp.sendRedirect("home");
+                return;
+            }
+        } catch (NullPointerException ignored) {
+        }
 
         if (req.getParameter("SignIn") != null) {
             Connection connection = connectionDB.getConnection();
@@ -49,7 +51,7 @@ public class AuthorizationController extends HttpServlet {
             connectionDB.stopConnection(connection);
             if (bool) {
                 session.setAttribute("UserInfo", userInfo);
-                resp.sendRedirect("test");
+                resp.sendRedirect("home");
             } else {
                 RequestDispatcher dispatcher = req.getRequestDispatcher("view/authentication/authorization.jsp");
                 dispatcher.forward(req, resp);

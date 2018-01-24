@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import logic.ConnectionDB;
+import org.jclouds.json.Json;
 
 import java.io.IOException;
 import java.sql.*;
@@ -111,6 +112,48 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
+    public JsonNode updateUserEmail(int id, String email, Connection connection) throws IOException{
+        List<HashMap<String, String>> list = new ArrayList<>();
+        try {
+            connection.setCatalog(connectionDB.getSCHEMA_NAME());
+            CallableStatement statement = connection.prepareCall("{call p_user_update_email(?,?,?,?)}");
+            statement.setInt("p_id", id);
+            statement.setString("p_email", email);
+            statement.execute();
+            HashMap<String, String> pair = new HashMap<>();
+            pair.put("responseCode", statement.getString("p_response_code"));
+            pair.put("responseMessage", statement.getString("p_response_message"));
+            list.add(pair);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String json = new Gson().toJson(list);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readTree(json);
+    }
+
+    @Override
+    public JsonNode updateUserPassword(int id, String password, Connection connection) throws IOException{
+        List<HashMap<String, String>> list = new ArrayList<>();
+        try {
+            connection.setCatalog(connectionDB.getSCHEMA_NAME());
+            CallableStatement statement = connection.prepareCall("{call p_user_update_password(?,?,?,?)}");
+            statement.setInt("p_id", id);
+            statement.setString("p_password", password);
+            statement.execute();
+            HashMap<String, String> pair = new HashMap<>();
+            pair.put("responseCode", statement.getString("p_response_code"));
+            pair.put("responseMessage", statement.getString("p_response_message"));
+            list.add(pair);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String json = new Gson().toJson(list);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readTree(json);
+    }
+
+    @Deprecated
     public JsonNode updateUser(int id, String name, String lastname, String email, String password, Connection connection) throws IOException {
         List<HashMap<String, String>> list = new ArrayList<>();
         try {
@@ -134,7 +177,7 @@ public class UserDAOImpl implements UserDAO{
         return mapper.readTree(json);
     }
 
-    @Override
+    @Deprecated
     public JsonNode deleteUser(int id, Connection connection) throws IOException {
         List<HashMap<String, String>> list = new ArrayList<>();
         try {
