@@ -53,13 +53,13 @@ public class ChangeEmailController extends HttpServlet {
 
             if (requestDB.get(0).get("responseCode").asInt() == 101) {
                 session.setAttribute("UserInfo", settingService.getUserInfo(req.getParameter("new_email"), connection));
+                resp.sendRedirect("account_settings");
             } else {
                 // TODO доделать возврат ошибок и переход на страницу change_email_error.jsp (саму страницу тоже создать) или реализовать на существующей
                 RequestDispatcher dispatcher = req.getRequestDispatcher("view/settings/change_email.jsp");
                 dispatcher.forward(req, resp);
             }
             connectionDB.stopConnection(connection);
-            resp.sendRedirect("account_settings");
         } else {
             RequestDispatcher dispatcher = req.getRequestDispatcher("view/settings/change_email.jsp");
             dispatcher.forward(req, resp);

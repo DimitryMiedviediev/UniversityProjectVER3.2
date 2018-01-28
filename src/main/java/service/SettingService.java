@@ -18,6 +18,10 @@ public class SettingService {
         return userDAO.updateUserPassword(id, password, connection);
     }
 
+    public JsonNode updateUserFullName(int id, String name, String lastname, Connection connection) throws IOException {
+        return userDAO.updateUserFullName(id, name, lastname, connection);
+    }
+
     public JsonNode getUserInfo(String email, Connection connection) throws IOException {
         return userDAO.getUser(email, connection);
     }

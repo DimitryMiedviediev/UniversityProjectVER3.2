@@ -1,4 +1,5 @@
-<%@ page import="com.fasterxml.jackson.databind.JsonNode" %><%--
+<%@ page import="com.fasterxml.jackson.databind.JsonNode" %>
+<%@ page import="jSONextracter.UserInfo" %><%--
   Created by IntelliJ IDEA.
   User: Dimitry
   Date: 14.01.2018
@@ -15,7 +16,13 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.js"></script>
-
+    <script>
+        function getEmail () {
+            let email = "<%=UserInfo.getUserEmail((JsonNode) request.getSession().getAttribute("UserInfo"))%>";
+            if (email === "null") email = "";
+            return email;
+        }
+    </script>
 </head>
 <body>
 
@@ -32,7 +39,7 @@
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">Change email</h5>
                     </div>
-                    <p class="mb-1"><%= ((JsonNode) request.getSession().getAttribute("UserInfo")).get(0).get("email").asText() %></p>
+                    <p class="mb-1" id="userEmail"></p>
                 </a>
                 <a href="change_password" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
@@ -45,5 +52,9 @@
         <div class="col-sm"></div>
     </div>
 </div>
+
+<script>
+    document.getElementById("userEmail").innerHTML = getEmail();
+</script>
 </body>
 </html>

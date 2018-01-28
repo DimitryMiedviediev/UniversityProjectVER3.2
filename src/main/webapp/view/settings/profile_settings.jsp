@@ -1,4 +1,5 @@
-<%@ page import="com.fasterxml.jackson.databind.JsonNode" %><%--
+<%@ page import="com.fasterxml.jackson.databind.JsonNode" %>
+<%@ page import="jSONextracter.UserInfo" %><%--
   Created by IntelliJ IDEA.
   User: Dimitry
   Date: 14.01.2018
@@ -15,6 +16,15 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.js"></script>
+    <script>
+        function getFullName () {
+            let name = "<%=UserInfo.getUserName((JsonNode) request.getSession().getAttribute("UserInfo"))%>";
+            let lastname = "<%=UserInfo.getUserLastname((JsonNode) request.getSession().getAttribute("UserInfo"))%>";
+            if (name === "null") name = "";
+            if (lastname === "null") lastname = "";
+            return name + " " + lastname;
+        }
+    </script>
 </head>
 <body>
 
@@ -31,13 +41,17 @@
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">Change full name</h5>
                     </div>
-                    <p class="mb-1"><%= ((JsonNode) request.getSession().getAttribute("UserInfo")).get(0).get("name").asText() %> <%= ((JsonNode) request.getSession().getAttribute("UserInfo")).get(0).get("lastname").asText() %></p>
+                    <p class="mb-1" id="fullName"></p>
                 </a>
             </div>
         </div>
         <div class="col-sm"></div>
     </div>
 </div>
+
+<script>
+    document.getElementById("fullName").innerHTML = getFullName();
+</script>
 
 </body>
 </html>
